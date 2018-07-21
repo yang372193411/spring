@@ -1,0 +1,21 @@
+package com.ityang.basic.controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * Created by Administrator on 2018/7/21.
+ */
+
+@RestController
+public class HelloController {
+
+    @RequestMapping("hello")
+    public String Hello(){
+        return "yang";
+    }
+    @RequestMapping("test")
+    public String Test(){
+        return  "test";
+    }
+}
