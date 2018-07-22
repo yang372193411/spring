@@ -13,23 +13,23 @@ import java.io.UnsupportedEncodingException;
  */
 
 @RestController
-@RequestMapping("hello")
-@Api("swaggerDemoController相关的api")
+@Api(value = "HelloController")
 public class HelloController {
 
     @RequestMapping("hello")
-    public String Hello(){
+    public String Hello() {
         return "yang";
     }
-    @RequestMapping("test")
-    public String Test(){
-        return  "test";
+
+    @RequestMapping("test2")
+    public String Test() {
+        return "test";
     }
 
     @RequestMapping("yang")
     @ApiOperation(value = "获取用户详细信息", notes = "根据url的id来获取用户详细信息")
     @ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Integer", paramType = "path")
-    public String toString(Integer id) {
+    public String getSwagger(Integer id) {
         String sb1 = null;
         try {
             byte[] bytes = "你好".getBytes();//"UTF-16");
@@ -40,5 +40,14 @@ public class HelloController {
         }
         System.out.println(sb1);
         return sb1;
+    }
+
+    @RequestMapping("tes1t")
+    public String test() {
+        return "test";
+    }
+    @RequestMapping("test3")
+    public String test4() {
+        return "test";
     }
 }
