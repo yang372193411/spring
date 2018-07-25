@@ -131,9 +131,31 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>${log4j.version}</version>
         </dependency>
-
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <env>home</env>
+                <plugin.assembly.phase>package</plugin.assembly.phase>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <env>work</env>
+                <plugin.assembly.phase>package</plugin.assembly.phase>
+            </properties>
+        </profile>
+    </profiles>
     <build>
+        <filters>
+            <filter>src/main/resources/env/${env}.properties</filter>
+        </filters>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -160,6 +182,49 @@
                     <testFailureIgnore>true</testFailureIgnore>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <descriptors>
+                        <descriptor>src/main/resources/assembly/assembly.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                    <include>**/*.txt</include>
+                    <include>**/*.*</include>
+                    <include>**/properties.*</include>
+                    <include>META-INF/**</include>
+                </includes>
+                <excludes>
+                    <exclude>env/**</exclude>
+                </excludes>
+                <filtering>true</filtering>
+            </resource>
+            <!--<resource>-->
+                <!--<directory>src/main/resources</directory>-->
+                <!--&lt;!&ndash; 包含，若没有指定则默认为 activeByDefault 标签定义的profile &ndash;&gt;-->
+                <!--<includes>-->
+                    <!--<include>env/${profiles.activation}.*</include>-->
+                <!--</includes>-->
+            <!--</resource>-->
+        </resources>
     </build>
 </project>

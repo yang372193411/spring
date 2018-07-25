@@ -8,6 +8,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -27,6 +28,7 @@ import static springfox.documentation.builders.PathSelectors.regex;
 @SpringBootApplication
 @EnableSwagger2
 @Configuration
+@ImportResource(locations={"classpath:application-bean.xml"})
 public class App extends WebMvcConfigurerAdapter {
 
     public static void main(String[] args) {
@@ -43,6 +45,9 @@ public class App extends WebMvcConfigurerAdapter {
         }
     }
 
+    /**
+     * swagger2
+     */
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2).select()
@@ -50,6 +55,9 @@ public class App extends WebMvcConfigurerAdapter {
                 .build();
     }
 
+    /**
+     * swagger2
+     */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
