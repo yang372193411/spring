@@ -3,6 +3,7 @@ package com.ityang.basic.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,8 +17,10 @@ import java.io.UnsupportedEncodingException;
 @RestController
 //@Api(value = "HelloController")
 public class HelloController {
+    @Value("${yang.test}")
+    private String test;
 
-    @RequestMapping(value = "yang",method = {RequestMethod.GET})
+    @RequestMapping(value = "yang", method = {RequestMethod.GET})
     @ApiOperation(value = "获取用户详细信息", notes = "根据url的id来获取用户详细信息")
     @ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Integer", paramType = "path")
     public String getSwagger(Integer id) {
@@ -33,7 +36,8 @@ public class HelloController {
         return sb1;
     }
 
-    public String hello() {
-        return "Hello";
+    @RequestMapping("test")
+    public String hello() throws Exception {
+        return new String(test.getBytes());
     }
 }
