@@ -132,6 +132,12 @@
             <version>${log4j.version}</version>
         </dependency>
     </dependencies>
+    <repositories>
+        <repository>
+            <id>cloudera</id>
+            <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
+        </repository>
+    </repositories>
 
     <profiles>
         <profile>
@@ -157,13 +163,6 @@
             <filter>src/main/resources/env/${env}.properties</filter>
         </filters>
         <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <fork>true</fork>
-                </configuration>
-            </plugin>
             <plugin>
                 <!--自动映射-->
                 <groupId>org.mybatis.generator</groupId>
@@ -193,7 +192,7 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <id>make-assembly</id>
+                        <id>package</id>
                         <phase>package</phase>
                         <goals>
                             <goal>single</goal>
@@ -201,7 +200,13 @@
                     </execution>
                 </executions>
             </plugin>
-
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork>
+                </configuration>
+            </plugin>
         </plugins>
         <resources>
             <resource>
