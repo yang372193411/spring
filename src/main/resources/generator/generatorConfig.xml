@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<!--自动生成实体类以及Mapper文件-->
+<generatorConfiguration>
+
+    <!-- 引入配置文件 -->
+    <properties resource="env/mybatis.properties"/>
+
+    <!-- 指定数据连接驱动jar地址 -->
+    <classPathEntry location="${env.jdbc.classpath}"/>
+
+    <!-- 一个数据库一个context -->
+    <context id="yang">
+        <!-- 注释 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/><!-- 是否取消注释 -->
+            <property name="suppressDate" value="true"/> <!-- 是否生成注释代时间戳-->
+        </commentGenerator>
+
+        <!-- jdbc连接 -->
+        <jdbcConnection driverClass="${env.jdbc.driver}"
+                        connectionURL="${env.jdbc.url}" userId="${env.jdbc.username}"
+                        password="${env.jdbc.password}"/>
+
+        <!-- 类型转换 -->
+        <javaTypeResolver>
+            <!-- 是否使用bigDecimal， false可自动转化以下类型（Long, Integer, Short, etc.） -->
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 生成实体类的包名和位置 注意targetProject的值为实体类放在工程中具体位置的相对路径，-->
+        <javaModelGenerator targetPackage="${env.jdbc.entitypath}"
+                            targetProject="${env.jdbc.targetpath}">
+            <!-- 是否在当前路径下新加一层-->
+            <property name="enableSubPackages" value="true"/>
+            <!-- 是否针对string类型的字段在set的时候进行trim调用 -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- 生成的SQLMapper映射文件包名和位置 -->
+        <sqlMapGenerator targetPackage="${env.jdbc.mapperpath}"
+                         targetProject="${env.jdbc.targetpath}">
+            <!-- 是否在当前路径下新加一层-->
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- 生成DAO的包名和位置，这里配置将生成的dao类放在me.gacl.dao这个包下 -->
+        <javaClientGenerator targetPackage="${env.jdbc.mapperpath}"
+                             targetProject="${env.jdbc.targetpath}" type="XMLMAPPER">
+            <!-- 是否在当前路径下新加一层-->
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!-- 配置表信息 -->
+        <!-- schema即为数据库名 tableName为对应的数据库表 domainObjectName是要生成的实体类 enable*ByExample
+                是否生成 example类   -->
+        <!-- 更改tableName和domainObjectName就可以 -->
+        <!--schema="qlm"-->
+        <table tableName="${env.jdbc.tableName}"
+               domainObjectName="${env.jdbc.objectName}" enableCountByExample="${env.jdbc.istrue}"
+               enableDeleteByExample="${env.jdbc.istrue}" enableSelectByExample="${env.jdbc.istrue}"
+               enableUpdateByExample="${env.jdbc.istrue}">
+        </table>
+    </context>
+</generatorConfiguration>
