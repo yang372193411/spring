@@ -144,17 +144,15 @@
             <id>dev</id>
             <properties>
                 <env>home</env>
-                <plugin.assembly.phase>package</plugin.assembly.phase>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
         </profile>
         <profile>
-            <id>test</id>
+            <id>env</id>
             <properties>
                 <env>work</env>
-                <plugin.assembly.phase>package</plugin.assembly.phase>
             </properties>
         </profile>
     </profiles>
@@ -223,13 +221,6 @@
                 </excludes>
                 <filtering>true</filtering>
             </resource>
-            <!--<resource>-->
-                <!--<directory>src/main/resources</directory>-->
-                <!--&lt;!&ndash; 包含，若没有指定则默认为 activeByDefault 标签定义的profile &ndash;&gt;-->
-                <!--<includes>-->
-                    <!--<include>env/${profiles.activation}.*</include>-->
-                <!--</includes>-->
-            <!--</resource>-->
         </resources>
         <!--增加${}占位符方式，调用变量，SpringBoot默认@变量@-->
         <pluginManagement>
