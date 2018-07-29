@@ -8,7 +8,7 @@
     <properties resource="env/mybatis.properties"/>
 
     <!-- 指定数据连接驱动jar地址 -->
-    <classPathEntry location="${env.jdbc.classpath}"/>
+    <classPathEntry location="${env.jdbc.classPath}"/>
 
     <!-- 一个数据库一个context -->
     <!--    id:必选，上下文id，用于在生成错误时提示
@@ -35,10 +35,10 @@
         <property name="beginningDelimiter" value="`"/>
         <property name="endingDelimiter" value="`"/>
 
-        <!-- 注释 -->
-        <commentGenerator>
-            <property name="suppressAllComments" value="true"/><!-- 是否取消注释 -->
-            <property name="suppressDate" value="true"/> <!-- 是否生成注释代时间戳-->
+        <!-- 注释使用自定义注释 -->
+        <commentGenerator type="com.ityang.basic.util.MyCommentGenerator">
+            <!--<property name="suppressAllComments" value="false"/>&lt;!&ndash; 是否取消注释 &ndash;&gt;-->
+            <!--<property name="suppressDate" value="true"/> &lt;!&ndash; 是否生成注释代时间戳&ndash;&gt;-->
         </commentGenerator>
 
         <!-- jdbc连接 -->
@@ -64,8 +64,8 @@
              targetProject：目标项目，指定一个存在的目录下，生成的内容会放到指定目录中，如果目录不存在，MBG不会自动建目录
           -->
         <!-- 生成实体类的包名和位置 注意targetProject的值为实体类放在工程中具体位置的相对路径，-->
-        <javaModelGenerator targetPackage="${env.jdbc.entitypath}"
-                            targetProject="${env.jdbc.targetpath}">
+        <javaModelGenerator targetPackage="${env.jdbc.entityPath}"
+                            targetProject="${env.jdbc.targetPath}">
             <!--  for MyBatis3/MyBatis3Simple
                自动为每一个生成的类创建一个构造方法，构造方法包含了所有的field；而不是使用setter；
              -->
@@ -77,8 +77,8 @@
         </javaModelGenerator>
 
         <!-- 生成的SQLMapper映射文件包名和位置 -->
-        <sqlMapGenerator targetPackage="${env.jdbc.mapperpath}"
-                         targetProject="${env.jdbc.targetpath}">
+        <sqlMapGenerator targetPackage="${env.jdbc.mapperPath}"
+                         targetProject="${env.jdbc.targetPath}">
             <!-- 是否在当前路径下新加一层-->
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
@@ -92,8 +92,8 @@
                     注意，如果context是MyBatis3Simple：只支持ANNOTATEDMAPPER和XMLMAPPER
                 -->
         <!-- 生成DAO的包名和位置，这里配置将生成的dao类放在me.gacl.dao这个包下 -->
-        <javaClientGenerator targetPackage="${env.jdbc.mapperpath}"
-                             targetProject="${env.jdbc.targetpath}" type="XMLMAPPER">
+        <javaClientGenerator targetPackage="${env.jdbc.mapperPath}"
+                             targetProject="${env.jdbc.targetPath}" type="${env.jdbc.generatorType}">
             <!-- 是否在当前路径下新加一层-->
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
@@ -137,8 +137,13 @@
              15，delimitAllColumns：设置是否所有生成的SQL中的列名都使用标识符引起来。默认为false，delimitIdentifiers参考context的属性
             注意，table里面很多参数都是对javaModelGenerator，context等元素的默认属性的一个复写；
           -->
-        <table tableName="${env.jdbc.tableName}"
-               domainObjectName="${env.jdbc.objectName}" enableCountByExample="${env.jdbc.istrue}"
+        <table tableName="user"
+               domainObjectName="User" enableCountByExample="${env.jdbc.istrue}"
+               enableDeleteByExample="${env.jdbc.istrue}" enableSelectByExample="${env.jdbc.istrue}"
+               enableUpdateByExample="${env.jdbc.istrue}">
+        </table>
+        <table tableName="group"
+               domainObjectName="Group" enableCountByExample="${env.jdbc.istrue}"
                enableDeleteByExample="${env.jdbc.istrue}" enableSelectByExample="${env.jdbc.istrue}"
                enableUpdateByExample="${env.jdbc.istrue}">
         </table>
