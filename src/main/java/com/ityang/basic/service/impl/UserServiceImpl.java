@@ -1,7 +1,8 @@
-package com.ityang.basic.service;
+package com.ityang.basic.service.impl;
 
 import com.ityang.basic.entity.User;
 import com.ityang.basic.mapper.UserMapper;
+import com.ityang.basic.service.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

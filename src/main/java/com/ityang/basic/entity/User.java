@@ -6,10 +6,12 @@
 */
 package com.ityang.basic.entity;
 
+import java.io.Serializable;
+
 /**
  * 用户表
  */
-public class User {
+public class User implements Serializable {
     /**
      * ID
      * 表字段 : user.id

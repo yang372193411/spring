@@ -6,10 +6,12 @@
 */
 package com.ityang.basic.entity;
 
+import java.io.Serializable;
+
 /**
  * 组
  */
-public class Group {
+public class Group implements Serializable {
     /**
      * ID
      * 表字段 : group.ID

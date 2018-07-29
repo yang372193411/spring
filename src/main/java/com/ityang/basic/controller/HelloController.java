@@ -19,35 +19,15 @@ import java.io.UnsupportedEncodingException;
 
 @RestController
 //@Api(value = "HelloController")
+@Api(description ="Hello控制器")
 public class HelloController {
-    @Value("${yang.test}")
-    private String test;
+
     @Resource
     private UserService service;
 
-    @RequestMapping(value = "yang", method = {RequestMethod.GET})
+    @RequestMapping(value = "user",method = {RequestMethod.GET,RequestMethod.POST})
     @ApiOperation(value = "获取用户详细信息", notes = "根据url的id来获取用户详细信息")
     @ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Integer", paramType = "path")
-    public String getSwagger(Integer id) {
-        String sb1 = null;
-        try {
-            byte[] bytes = "你好".getBytes();//"UTF-16");
-            System.out.println(bytes.toString());
-            sb1 = new String(bytes, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        System.out.println(sb1);
-        return sb1;
-    }
-
-    @RequestMapping("test")
-    public String hello() throws Exception {
-        return new String(test.getBytes());
-    }
-
-
-    @RequestMapping("user")
     public User getUserById(Integer id){
         return service.getUserId(id);
     }

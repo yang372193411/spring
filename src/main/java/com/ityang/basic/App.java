@@ -3,6 +3,7 @@ package com.ityang.basic;
 import com.github.pagehelper.PageHelper;
 import com.google.common.base.Predicates;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -10,6 +11,9 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -22,7 +26,7 @@ import java.util.Properties;
 @SpringBootApplication
 @EnableSwagger2
 @Configuration
-@ImportResource(locations={"classpath:application-bean.xml"})
+@ImportResource(locations = {"classpath:spring-bean.xml"})//,"classpath:spring-redis.xml"})
 @MapperScan("com.ityang.basic.mapper")
 public class App extends WebMvcConfigurerAdapter {
 
@@ -71,5 +75,19 @@ public class App extends WebMvcConfigurerAdapter {
         properties.setProperty("dialect", "mysql");    //配置mysql数据库的方言
         pageHelper.setProperties(properties);
         return pageHelper;
+    }
+
+    //处理Redis缓存对象Key为乱码
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    //处理Redis缓存对象Key为乱码
+    @Bean
+    public RedisTemplate redisTemplateInit() {
+        //设置序列化Key的实例化对象
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        //设置序列化Value的实例化对象
+        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        return redisTemplate;
     }
 }

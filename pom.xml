@@ -5,8 +5,9 @@
 
     <groupId>com.ityang.basic</groupId>
     <artifactId>yang</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
+    <!--<packaging>war</packaging>-->
 
     <name>yang</name>
     <description>OneSpringBoot</description>
