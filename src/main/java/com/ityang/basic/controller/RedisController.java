@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -28,7 +29,7 @@ public class RedisController {
      */
     @RequestMapping(value = "setStr",method = RequestMethod.GET)
     @ApiOperation(value = "写入缓存", notes = "写入Key,Val",response = String.class)
-    public String setStr(@ApiParam("redis Key") String key, @ApiParam("写入值")String val) {
+    public String setStr(@ApiParam("redis Key") @RequestParam("key") String key, @ApiParam("写入值")@RequestParam("val")String val) {
         try {
             redisService.setStr(key, val);
             return "success";
