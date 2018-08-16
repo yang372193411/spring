@@ -38,6 +38,13 @@ public class HelloController {
         return service.getUserId(id);
     }
 
+    /**
+     *
+     * @param reg ^(\d{4})-(\d{2})-(\d{2})$
+     * @param val  2018-10-12
+     * @param rel  $1-$2-$3-00
+     * @return 执行正则表达式, 规则值为^(\d{4})-(\d{2})-(\d{2})$,执行前的值为2018-10-12,执行后的值为2018-10-12-00
+     */
     @RequestMapping(value = "regex", method = {RequestMethod.GET})
     @ApiOperation(value = "使用正则表达式", notes = "使用正则表达式")
     public String regex(@ApiParam(name = "reg", value = "正则表达式") @RequestParam("reg") String reg,
