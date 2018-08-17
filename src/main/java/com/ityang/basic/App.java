@@ -25,10 +25,9 @@ import java.util.Properties;
 
 @SpringBootApplication
 @EnableSwagger2
-@Configuration
 @ImportResource(locations = {"classpath:spring-bean.xml"})//,"classpath:spring-redis.xml"})
 @MapperScan("com.ityang.basic.mapper")
-public class App extends WebMvcConfigurerAdapter {
+public class App  {
 
     public static void main(String[] args) {
         SpringApplication.run(App.class, args);
@@ -44,50 +43,4 @@ public class App extends WebMvcConfigurerAdapter {
         }
     }
 
-    /**
-     * swagger2
-     */
-    @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2).select()
-                .apis(Predicates.not(RequestHandlerSelectors.basePackage("org.springframework.boot")))
-                .build();
-    }
-
-    /**
-     * swagger2
-     */
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
-        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
-    }
-
-
-    //配置mybatis的分页插件pageHelper
-    @Bean
-    public PageHelper pageHelper() {
-        PageHelper pageHelper = new PageHelper();
-        Properties properties = new Properties();
-        properties.setProperty("offsetAsPageNum", "true");
-        properties.setProperty("rowBoundsWithCount", "true");
-        properties.setProperty("reasonable", "true");
-        properties.setProperty("dialect", "mysql");    //配置mysql数据库的方言
-        pageHelper.setProperties(properties);
-        return pageHelper;
-    }
-
-    //处理Redis缓存对象Key为乱码
-    @Autowired
-    private RedisTemplate redisTemplate;
-
-    //处理Redis缓存对象Key为乱码
-    @Bean
-    public RedisTemplate redisTemplateInit() {
-        //设置序列化Key的实例化对象
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
-        //设置序列化Value的实例化对象
-        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
-        return redisTemplate;
-    }
 }
