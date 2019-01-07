@@ -6,8 +6,8 @@
     <groupId>com.ityang.basic</groupId>
     <artifactId>yang</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
-    <!--<packaging>war</packaging>-->
+    <!--<packaging>jar</packaging>-->
+    <packaging>war</packaging>
 
     <name>yang</name>
     <description>OneSpringBoot</description>
@@ -32,6 +32,7 @@
         <log4j.version>1.7.21</log4j.version>
         <!--<tomcat.version>7.0.53</tomcat.version>-->
         <dubbo-spring-boot>1.0.0</dubbo-spring-boot>
+        <elsearch.version>6.5.2</elsearch.version>
     </properties>
 
     <dependencies>
@@ -44,6 +45,16 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
         <!--Servlet-->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -144,11 +155,48 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>${log4j.version}</version>
         </dependency>
+
         <dependency>
-            <groupId>com.ityang.basic</groupId>
-            <artifactId>yang-core</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.6.3</version>
+            <type>jar</type>
+            <scope>compile</scope>
         </dependency>
+
+        <!--Kafka-->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+            <version>2.1.0.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka_2.11</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+
+
+
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.kafka</groupId>-->
+            <!--<artifactId>spring-kafka-test</artifactId>-->
+            <!--<version>1.0.2.RELEASE</version>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
+
+        <!--ES-->
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>transport</artifactId>
+            <version>6.5.4</version>
+        </dependency>
+
 
     </dependencies>
     <repositories>

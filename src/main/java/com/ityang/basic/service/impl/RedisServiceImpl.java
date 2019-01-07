@@ -1,6 +1,9 @@
 package com.ityang.basic.service.impl;
 
+import com.ityang.basic.controller.KafkaController;
 import com.ityang.basic.service.RedisService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -11,6 +14,8 @@ import javax.annotation.Resource;
 
 @Service("redisServer")
 public class RedisServiceImpl implements RedisService {
+    private static final Logger logger = LoggerFactory.getLogger(KafkaController.class);
+
     @Autowired
     StringRedisTemplate stringRedisTemplate;
 
@@ -31,7 +36,7 @@ public class RedisServiceImpl implements RedisService {
 
     @Override
     public void setStr(String key, String val) {
-        valOpsStr.set(key,val);
+        valOpsStr.set(key, val);
     }
 
     @Override

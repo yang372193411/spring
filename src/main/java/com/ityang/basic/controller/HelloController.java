@@ -6,6 +6,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.io.UnsupportedEncodingException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,27 +23,27 @@ import java.util.regex.Pattern;
  */
 
 @RestController
-//@Api(value = "HelloController")
-@Api(description = "Hello控制器")
+@Api(description = "helloController")
 public class HelloController {
 
+    private static final Logger logger = LoggerFactory.getLogger(KafkaController.class);
 
+    @Value("${spring.redis.host}")
+    private String redisIp;
     @Resource
     private UserService service;
 
-
     @RequestMapping(value = "user", method = {RequestMethod.GET, RequestMethod.POST})
     @ApiOperation(value = "获取用户详细信息", notes = "根据url的id来获取用户详细信息")
-    @ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Integer", paramType = "path")
+    @ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Integer", paramType = "query")
     public User getUserById(Integer id) {
-        return service.getUserId(id);
+        return service.getUserById(id.toString());
     }
 
     /**
-     *
      * @param reg ^(\d{4})-(\d{2})-(\d{2})$
-     * @param val  2018-10-12
-     * @param rel  $1-$2-$3-00
+     * @param val 2018-10-12
+     * @param rel $1-$2-$3-00
      * @return 执行正则表达式, 规则值为^(\d{4})-(\d{2})-(\d{2})$,执行前的值为2018-10-12,执行后的值为2018-10-12-00
      */
     @RequestMapping(value = "regex", method = {RequestMethod.GET})
@@ -56,6 +57,13 @@ public class HelloController {
         String result = matcher.replaceAll(rel);
         return ("执行正则表达式,规则值为" + reg
                 + ",执行前的值为" + val + ",执行后的值为" + result);
+    }
+
+    @RequestMapping(value = "hello",method = {RequestMethod.GET})
+    @ApiOperation(value = "获取IP", notes = "获取IP")
+    public String getStr() {
+        logger.info(redisIp);
+        return redisIp;
     }
 
 }

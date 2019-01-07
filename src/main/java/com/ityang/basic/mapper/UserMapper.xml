@@ -1,82 +1,259 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ityang.basic.mapper.UserMapper" >
-  <resultMap id="BaseResultMap" type="com.ityang.basic.entity.User" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="pass" property="pass" jdbcType="VARCHAR" />
-    <result column="moble" property="moble" jdbcType="VARCHAR" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ityang.basic.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.ityang.basic.entity.User">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="userName" jdbcType="VARCHAR" property="username" />
+    <result column="passwd" jdbcType="VARCHAR" property="passwd" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="profession" jdbcType="VARCHAR" property="profession" />
+    <result column="company" jdbcType="VARCHAR" property="company" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="homeTown" jdbcType="VARCHAR" property="hometown" />
+    <result column="bloodType" jdbcType="INTEGER" property="bloodtype" />
+    <result column="isConfirm" jdbcType="VARCHAR" property="isconfirm" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="noun" jdbcType="VARCHAR" property="noun" />
+    <result column="money" jdbcType="VARCHAR" property="money" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+    <result column="loginName" jdbcType="VARCHAR" property="loginname" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, name, pass, moble
+  <sql id="Base_Column_List">
+    id, userName, passwd, sex, birthday, email, phone, profession, company, area, homeTown, 
+    bloodType, isConfirm, status, noun, money, note, loginName
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="getUserById" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from user
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <select id="getUserByPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where phone = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="getUserByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where userName = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from user
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.ityang.basic.entity.User" >
-    insert into user (id, name, pass, 
-      moble)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{pass,jdbcType=VARCHAR}, 
-      #{moble,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.ityang.basic.entity.User">
+    insert into user (id, userName, passwd, 
+      sex, birthday, email, 
+      phone, profession, company, 
+      area, homeTown, bloodType, 
+      isConfirm, status, noun, 
+      money, note, loginName
+      )
+    values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=INTEGER}, #{birthday,jdbcType=TIMESTAMP}, #{email,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{profession,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, 
+      #{area,jdbcType=VARCHAR}, #{hometown,jdbcType=VARCHAR}, #{bloodtype,jdbcType=INTEGER}, 
+      #{isconfirm,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{noun,jdbcType=VARCHAR}, 
+      #{money,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}, #{loginname,jdbcType=VARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.ityang.basic.entity.User" >
+  <insert id="insertSelective" parameterType="com.ityang.basic.entity.User">
     insert into user
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         id,
       </if>
-      <if test="name != null" >
-        name,
+      <if test="username != null">
+        userName,
       </if>
-      <if test="pass != null" >
-        pass,
+      <if test="passwd != null">
+        passwd,
       </if>
-      <if test="moble != null" >
-        moble,
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="profession != null">
+        profession,
+      </if>
+      <if test="company != null">
+        company,
+      </if>
+      <if test="area != null">
+        area,
+      </if>
+      <if test="hometown != null">
+        homeTown,
+      </if>
+      <if test="bloodtype != null">
+        bloodType,
+      </if>
+      <if test="isconfirm != null">
+        isConfirm,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="noun != null">
+        noun,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+      <if test="note != null">
+        note,
+      </if>
+      <if test="loginname != null">
+        loginName,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
       </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
       </if>
-      <if test="pass != null" >
-        #{pass,jdbcType=VARCHAR},
+      <if test="passwd != null">
+        #{passwd,jdbcType=VARCHAR},
       </if>
-      <if test="moble != null" >
-        #{moble,jdbcType=VARCHAR},
+      <if test="sex != null">
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="profession != null">
+        #{profession,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null">
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="hometown != null">
+        #{hometown,jdbcType=VARCHAR},
+      </if>
+      <if test="bloodtype != null">
+        #{bloodtype,jdbcType=INTEGER},
+      </if>
+      <if test="isconfirm != null">
+        #{isconfirm,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="noun != null">
+        #{noun,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null">
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="loginname != null">
+        #{loginname,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ityang.basic.entity.User" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.ityang.basic.entity.User">
     update user
-    <set >
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
+    <set>
+      <if test="username != null">
+        userName = #{username,jdbcType=VARCHAR},
       </if>
-      <if test="pass != null" >
-        pass = #{pass,jdbcType=VARCHAR},
+      <if test="passwd != null">
+        passwd = #{passwd,jdbcType=VARCHAR},
       </if>
-      <if test="moble != null" >
-        moble = #{moble,jdbcType=VARCHAR},
+      <if test="sex != null">
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="profession != null">
+        profession = #{profession,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null">
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="hometown != null">
+        homeTown = #{hometown,jdbcType=VARCHAR},
+      </if>
+      <if test="bloodtype != null">
+        bloodType = #{bloodtype,jdbcType=INTEGER},
+      </if>
+      <if test="isconfirm != null">
+        isConfirm = #{isconfirm,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="noun != null">
+        noun = #{noun,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null">
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="loginname != null">
+        loginName = #{loginname,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ityang.basic.entity.User" >
+  <update id="updateById" parameterType="com.ityang.basic.entity.User">
     update user
-    set name = #{name,jdbcType=VARCHAR},
-      pass = #{pass,jdbcType=VARCHAR},
-      moble = #{moble,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+    set userName = #{username,jdbcType=VARCHAR},
+      passwd = #{passwd,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      birthday = #{birthday,jdbcType=TIMESTAMP},
+      email = #{email,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      profession = #{profession,jdbcType=VARCHAR},
+      company = #{company,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      homeTown = #{hometown,jdbcType=VARCHAR},
+      bloodType = #{bloodtype,jdbcType=INTEGER},
+      isConfirm = #{isconfirm,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      noun = #{noun,jdbcType=VARCHAR},
+      money = #{money,jdbcType=VARCHAR},
+      note = #{note,jdbcType=VARCHAR},
+      loginName = #{loginname,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>
