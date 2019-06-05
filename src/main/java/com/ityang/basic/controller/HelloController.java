@@ -28,6 +28,7 @@ public class HelloController {
 
     private static final Logger logger = LoggerFactory.getLogger(KafkaController.class);
 
+
     @Value("${spring.redis.host}")
     private String redisIp;
     @Resource
