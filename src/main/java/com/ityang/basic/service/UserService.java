@@ -30,4 +30,6 @@ public interface UserService {
      * @return
      */
     int saveUser(User user);
+
+    String test();
 }

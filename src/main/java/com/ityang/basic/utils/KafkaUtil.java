@@ -1,11 +1,12 @@
 package com.ityang.basic.utils;
 
 
-import com.github.pagehelper.util.StringUtil;
+
 import kafka.admin.AdminUtils;
 import kafka.admin.RackAwareMode;
 import kafka.server.ConfigType;
 import kafka.utils.ZkUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -86,7 +87,7 @@ public class KafkaUtil {
     }
 
     public static String createRowKey(String key) {
-        if (StringUtil.isEmpty(key)) {
+        if (StringUtils.isEmpty(key)) {
             return encrypt(UUID.randomUUID().toString().replace("-", "")).substring(0, 4) + "_" + key;
         } else {
             return encrypt(key);
@@ -94,7 +95,7 @@ public class KafkaUtil {
     }
 
     public static String encrypt(String str) {
-        if (StringUtil.isEmpty(str)) {
+        if (StringUtils.isEmpty(str)) {
             return null;
         }
         try {

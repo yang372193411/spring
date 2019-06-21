@@ -1,13 +1,19 @@
 package com.ityang.basic.controller;
 
 import com.ityang.basic.entity.User;
+import com.ityang.basic.mapper.UserMapper;
 import com.ityang.basic.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,9 +30,8 @@ import java.util.regex.Pattern;
 
 @RestController
 @Api(description = "helloController")
+@Slf4j
 public class HelloController {
-
-    private static final Logger logger = LoggerFactory.getLogger(KafkaController.class);
 
 
     @Value("${spring.redis.host}")
@@ -63,8 +68,14 @@ public class HelloController {
     @RequestMapping(value = "hello",method = {RequestMethod.GET})
     @ApiOperation(value = "获取IP", notes = "获取IP")
     public String getStr() {
-        logger.info(redisIp);
+        log.info(redisIp);
         return redisIp;
+    }
+
+    @RequestMapping(value = "test",method = RequestMethod.GET)
+    @ApiOperation(value = "test", notes = "test")
+    public String test(){
+        return String.valueOf(service.test());
     }
 
 }

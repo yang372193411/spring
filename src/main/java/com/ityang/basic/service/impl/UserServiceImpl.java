@@ -4,6 +4,7 @@ import com.ityang.basic.controller.KafkaController;
 import com.ityang.basic.entity.User;
 import com.ityang.basic.mapper.UserMapper;
 import com.ityang.basic.service.UserService;
+import org.apache.ibatis.annotations.Property;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -70,4 +71,9 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public String test() {
+
+        return new String(mapper.getId());
+    }
 }
