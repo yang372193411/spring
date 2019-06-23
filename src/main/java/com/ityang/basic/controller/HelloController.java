@@ -1,5 +1,6 @@
 package com.ityang.basic.controller;
 
+import com.ityang.basic.config.PropertiesConfig;
 import com.ityang.basic.entity.User;
 import com.ityang.basic.mapper.UserMapper;
 import com.ityang.basic.service.UserService;
@@ -8,11 +9,8 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +36,9 @@ public class HelloController {
     private String redisIp;
     @Resource
     private UserService service;
+
+    @Autowired
+    private SqlSessionFactory sqlSessionFactory;
 
     @RequestMapping(value = "user", method = {RequestMethod.GET, RequestMethod.POST})
     @ApiOperation(value = "获取用户详细信息", notes = "根据url的id来获取用户详细信息")
@@ -75,6 +76,12 @@ public class HelloController {
     @RequestMapping(value = "test",method = RequestMethod.GET)
     @ApiOperation(value = "test", notes = "test")
     public String test(){
+        String dbType = PropertiesConfig.getDbType();
+        log.info(dbType);
+        SqlSession session = sqlSessionFactory.openSession();
+        UserMapper mapper = session.getMapper(UserMapper.class);
+        mapper.getId();
+
         return String.valueOf(service.test());
     }
 

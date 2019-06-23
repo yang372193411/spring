@@ -8,6 +8,7 @@ package com.ityang.basic.mapper;
 
 import com.ityang.basic.entity.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 public interface UserMapper {
     /**

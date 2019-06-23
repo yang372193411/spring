@@ -127,3 +127,5 @@ banner:
 #    #定义全局变量
 #    variables:
 #      dbType: oracle
+yang:
+  dbType: oracle

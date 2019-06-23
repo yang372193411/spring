@@ -1,8 +1,13 @@
 package com.ityang.basic.config;
 
+import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.logging.log4j2.Log4j2AbstractLoggerImpl;
+import org.apache.ibatis.logging.log4j2.Log4j2Impl;
+import org.apache.ibatis.logging.stdout.StdOutImpl;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,18 +18,31 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 @Configuration
+@Slf4j
 public class MybatisConfig {
     @Autowired
     private DataSource dataSource;
 
 
+    private static SqlSessionFactoryBean bean;
+
+    static {
+        if(bean == null){
+            bean = new SqlSessionFactoryBean();
+        }
+    }
+
     @Bean
     public SqlSessionFactory getSqlFactory() throws Exception {
-        SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
+
         bean.setDataSource(dataSource);
         Properties properties = new Properties();
         properties.put("dbType", "oracle");
-        bean.setConfigurationProperties(properties);
+        org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
+        configuration.setVariables(properties);//配置Mybatis全局变量
+        configuration.setLogImpl(StdOutImpl.class);//配置日志
+//        bean.setConfigurationProperties(properties);
+        bean.setConfiguration(configuration);
         bean.setDatabaseIdProvider(new DatabaseIdProvider() {
             private static final String DATABASE_MYSQL = "MySQL";
             private static final String DATABASE_POSTGRESQL = "PostgreSQL";
@@ -61,5 +79,18 @@ public class MybatisConfig {
             }
         });
         return bean.getObject();
+    }
+
+    @Bean
+    public SqlSessionTemplate getTemplate(){
+
+        SqlSessionTemplate template = null;
+        try {
+            template = new SqlSessionTemplate(bean.getObject());
+        } catch (Exception e) {
+            log.error("生成SqlSessionTemplate失败"+e);
+            e.printStackTrace();
+        }
+        return template;
     }
 }

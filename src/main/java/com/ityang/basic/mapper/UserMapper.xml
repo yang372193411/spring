@@ -257,17 +257,13 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
     <select id="getId" resultType="string">
-<bind name="test" value="dbType"/>
+        <bind name="test" value="${dbType}"/>
         <choose>
-            <when test="null eq null ">
-                <![CDATA[
-                    select '#{test}' from dual
-                ]]>
-            </when>
+            <when test="dbType neq null "><![CDATA[
+                select '${dbType}' from dual
+            ]]></when>
             <otherwise>
-                <![CDATA[
-                    select 'yang' from dual
-                ]]>
+                select &apos;yang&apos; from dual
             </otherwise>
         </choose>
     </select>
