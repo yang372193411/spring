@@ -1,0 +1,48 @@
+spring:
+  #数据源配置
+  datasource:
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    driver-class-name: org.h2.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:h2:file:/data/h2/yang;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1
+    password: sa
+    username: sa
+    platform: h2 #表明使用的数据库平台是h2
+    filters: stat,wall,log4j
+    initialSize: 5
+    maxActive: 20
+    maxPoolPreparedStatementPerConnectionSize: 20
+    maxWait: 60000
+    minEvictableIdleTimeMillis: 300000
+    minIdle: 5
+    poolPreparedStatements: true
+    testOnBorrow: false
+    testOnReturn: false
+    testWhileIdle: true
+    timeBetweenEvictionRunsMillis: 60000
+    useGlobalDataSourceStat: true
+    validationQuery: SELECT 1
+  h2:
+    console:
+      enabled: true #进行该配置，程序开启时就会启动h2 web consloe。当然这是默认的，如果你不想在启动程序时启动h2 web consloe，那么就设置为false。
+      path: /h2 #进行该配置，你就可以通过YOUR_URL/h2访问h2 web consloe。YOUR_URL是你程序的访问URl。
+      settings:
+        web-allow-others: true # 进行该配置后，h2 web consloe就可以在远程访问了。否则只能在本机访问
+  #################redis基础配置#################
+  redis:
+    #指定redis是哪个数据库
+    database: 5
+    host: 127.0.0.1
+    port: 6379
+    timeout: 3000
+    #################redis线程池设置#################
+    pool:
+      # 如果赋值为-1，则表示不限制；如果pool已经分配了maxActive个jedis实例，则此时pool的状态为exhausted(耗尽)。
+      max-active: 2000
+      # 连接池中的最大空闲连接，默认值也是8。
+      max-idle: 50
+      #连接池中的最小空闲连接，默认值也是0。
+      min-idle: 10
+      # 等待可用连接的最大时间，单位毫秒，默认值为-1，表示永不超时。如果超过等待时间，则直接抛出JedisConnectionException
+      max-wait: 1000
+

@@ -6,7 +6,12 @@
  */
 package com.ityang.basic.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
@@ -18,11 +23,13 @@ import java.util.Date;
  * @Date 2018-12-18 14:18:37
  */
 @Data
+@TableName("USER")
 public class User {
     /**
      * ID
      * 表字段 : user.id
      */
+    @TableId(type = IdType.AUTO)
     private String id;
 
     /**

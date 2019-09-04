@@ -1,119 +1,26 @@
-#============== kafka ===================
-kafka:
-  consumer:
-    auto:
-      commit:
-        interval: 100
-      offset:
-        reset: latest
-    concurrency: 10
-    enable:
-      auto:
-        commit: true
-    group:
-      id: test
-    servers: 127.0.0.1:9092
-    session:
-      timeout: 6000
-    topic: test
-    zookeeper:
-      connect: 127.0.0.1:2181
-
-  producer:
-    batch:
-      size: 4096
-    buffer:
-      memory: 40960
-    linger: 1
-    retries: 0
-    servers: 127.0.0.1:9092
-
 spring:
-#  profiles:
-#    #选择文件后缀，dev则加载application-dev.yml
-#    active: dev
-  data:
-    #elasticsearch配置
-    elasticsearch:
-      # elasticsearch集群名称，默认的是elasticsearch
-      cluster-name: elasticsearch
-      #节点的地址 注意api模式下端口号是9300，千万不要写成9200
-      cluster-nodes: 127.0.0.1:9300
-      #是否开启本地存储
-      repositories:
-        enable: true
-
-  #数据源配置
-  datasource:
-    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
-    driver-class-name: ${env.jdbc.driver}
-    filters: stat,wall,log4j
-    initialSize: 5
-    maxActive: 20
-    maxPoolPreparedStatementPerConnectionSize: 20
-    maxWait: 60000
-    minEvictableIdleTimeMillis: 300000
-    minIdle: 5
-    password: ${env.jdbc.password}
-    poolPreparedStatements: true
-    testOnBorrow: false
-    testOnReturn: false
-    testWhileIdle: true
-    timeBetweenEvictionRunsMillis: 60000
-    type: ${env.jdbc.type}
-    url: ${env.jdbc.url}
-    useGlobalDataSourceStat: true
-    username: ${env.jdbc.username}
-    validationQuery: SELECT 1 FROM DUAL
-
-  ## Dubbo 服务提供者配置
-  dubbo:
-    application:
-      name: ${env.dubbo.appName}
-    protocol:
-      name: ${env.dubbo.name}
-      port: ${env.dubbo.port}
-    registry:
-      address: ${env.dubbo.address}
-    scan: ${env.dubbo.scan}
-  #################redis基础配置#################
-  redis:
-    #指定redis是哪个数据库
-    database: ${env.redis.database}
-    host: ${env.redis.host}
-    port: ${env.redis.port}
-    timeout: 3000
-    #################redis线程池设置#################
-    pool:
-      # 如果赋值为-1，则表示不限制；如果pool已经分配了maxActive个jedis实例，则此时pool的状态为exhausted(耗尽)。
-      max-active: 2000
-      # 连接池中的最大空闲连接，默认值也是8。
-      max-idle: 50
-      #连接池中的最小空闲连接，默认值也是0。
-      min-idle: 10
-      # 等待可用连接的最大时间，单位毫秒，默认值为-1，表示永不超时。如果超过等待时间，则直接抛出JedisConnectionException
-      max-wait: 1000
+  profiles:
+    active: h2
   #设置spring-boot 编码格式
   http:
     encoding:
       charset: UTF-8
       enabled: true
       force: true
-
   messages:
     encoding: UTF-8
-
+#设置tomcat参数
 server:
-  port: 8080
+  port: 8181
   servlet:
     context-path: /yang
   #设置spring-boot 编码格式
   tomcat:
     uri-encoding: UTF-8
-
 #设置spring-boot 编码格式
 banner:
   charset: UTF-8
+
 
 #mybatis:
 #  #mapper映射文件路径

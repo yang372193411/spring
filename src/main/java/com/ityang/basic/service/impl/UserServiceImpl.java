@@ -1,10 +1,11 @@
 package com.ityang.basic.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.ityang.basic.controller.KafkaController;
 import com.ityang.basic.entity.User;
 import com.ityang.basic.mapper.UserMapper;
 import com.ityang.basic.service.UserService;
-import org.apache.ibatis.annotations.Property;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User getUserById(String id) {
-        return mapper.getUserById(id);
+        return mapper.selectById(id);
     }
 
     /**
@@ -38,7 +39,9 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User getUserByPhone(String phone) {
-        return mapper.getUserByPhone(phone);
+        QueryWrapper<User> query = new QueryWrapper();
+        query.eq("phone",phone);
+        return mapper.selectOne(query);
     }
 
     /**
@@ -49,7 +52,17 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User getUserByUserName(String userName) {
-        return mapper.getUserByUserName(userName);
+        QueryWrapper<User> query = new QueryWrapper();
+        query.eq("userName",userName);
+
+        return mapper.selectOne(query);
+    }
+
+
+    public void updateByUserName(User user){
+        UpdateWrapper<User> update = new UpdateWrapper<>();
+        update.eq("userName",user.getUsername());
+        mapper.update(user,update);
     }
 
     /**
@@ -60,20 +73,11 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public int saveUser(User user) {
-        int returnInt = -1;
-        try {
-            returnInt = mapper.insert(user);
-        } catch (Exception e) {
-            returnInt = 0;
-            logger.error(e+"");
-        } finally {
-            return returnInt;
-        }
+        return mapper.insert(user);
     }
 
     @Override
     public String test() {
-
         return new String(mapper.getId());
     }
 }

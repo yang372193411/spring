@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PropertiesConfig {
-    public static String dbType;
+        public static String dbType;
 
     @Value("${yang.dbType}")
     public void setDbType(String dbType) {

@@ -2,25 +2,29 @@ package com.ityang.basic;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+
 //@RunWith(SpringRunner.class)
 //@SpringBootTest
 public class AutoClass {
-    static  int i =0;
 
     @Test
-    public synchronized void AutoCreate() {
-        for(; i <10; i ++){
+    public void AutoCreate() {
+        int[] list = new int[]{2,3,6,8,1,4,5,7};
+        //归并算法 nlog算法
+        mergeSort(list);
 
-            new Thread(
+    }
 
-                    () -> {
-
-                System.out.println("Hello World"+i);
-                System.out.println( i+"---->"+Thread.currentThread().getName());
-
-            }).start();
+    public static void mergeSort(int[] list){
+        int[] clist = Arrays.copyOf(list, list.length);
+        int left = list.length/2;
+        int right = list.length - left;
+        System.out.println(left);
+        System.out.println(right);
+        if(left > right){
+            return;
         }
-
     }
 
 }

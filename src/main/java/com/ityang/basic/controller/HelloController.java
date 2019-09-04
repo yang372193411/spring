@@ -13,12 +13,17 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,7 +32,7 @@ import java.util.regex.Pattern;
  */
 
 @RestController
-@Api(description = "helloController")
+@Api(value = "helloController")
 @Slf4j
 public class HelloController {
 
@@ -37,8 +42,8 @@ public class HelloController {
     @Resource
     private UserService service;
 
-    @Autowired
-    private SqlSessionFactory sqlSessionFactory;
+//    @Autowired
+//    private SqlSessionFactory sqlSessionFactory;
 
     @RequestMapping(value = "user", method = {RequestMethod.GET, RequestMethod.POST})
     @ApiOperation(value = "获取用户详细信息", notes = "根据url的id来获取用户详细信息")
@@ -75,12 +80,21 @@ public class HelloController {
 
     @RequestMapping(value = "test",method = RequestMethod.GET)
     @ApiOperation(value = "test", notes = "test")
-    public String test(){
+    public String test(HttpServletRequest request, HttpServletResponse response){
+        HttpSession httpSession = request.getSession();
+        if(null == httpSession.getAttribute("name")){
+            httpSession.setAttribute("name","yang");
+        } else {
+            log.info(httpSession.getId());
+            log.info(httpSession.getAttribute("name")+"");
+        }
+        ServletContext context = httpSession.getServletContext().getContext("/yang");
+        context.getContextPath();
         String dbType = PropertiesConfig.getDbType();
         log.info(dbType);
-        SqlSession session = sqlSessionFactory.openSession();
-        UserMapper mapper = session.getMapper(UserMapper.class);
-        mapper.getId();
+//        SqlSession session = sqlSessionFactory.openSession();
+//        UserMapper mapper = session.getMapper(UserMapper.class);
+//        mapper.getId();
 
         return String.valueOf(service.test());
     }
